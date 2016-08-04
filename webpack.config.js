@@ -1,10 +1,11 @@
-var debug = process.env.NODE_ENV ? true: false;
+var _ = require('lodash');
+var debug = !_.eq(process.env.NODE_ENV, 'production');
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 if (!debug) {
-  console.log('You are running in production mode');
+  console.log('Compiling from production');
 }
 
 function getBabelQuery () {
@@ -63,12 +64,18 @@ module.exports = [
       path: __dirname + "/dist/css",
       filename: "../js/index.min.js"
     },
-    plugins: debug ? [] : [
+    plugins: debug ? [
+        new webpack.DefinePlugin({
+          "process.env": { 
+             NODE_ENV: JSON.stringify("development") 
+           }
+        })
+      ] : [
       new webpack.DefinePlugin({
-        "process.env": { 
-           NODE_ENV: JSON.stringify("production") 
-         }
-      }),
+          "process.env": { 
+             NODE_ENV: JSON.stringify("production") 
+           }
+        }),
       new ExtractTextPlugin('../css/index.css'),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),

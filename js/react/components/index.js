@@ -6,7 +6,6 @@ import * as commentActions from '../bootstrap/actions/CommentActions';
 
 const mapStateToProps = (state) => {
 	return {
-		auction: state.Auctions,
 		comments: state.Comments
 	}
 }
