@@ -18,5 +18,9 @@ __Note: Still on your subasta folder using your terminal / command prompt__
 
 1. Set node env to __set NODE_ENV=production__ for windows
 2. Mac or Linux ENV_NODE=prodcution
-3. type __webpack__
-4. Pull the latest code on our master branch and merge it to your branch then push your branch and create a pull request
+3. Pull the latest code on our master branch and merge it to your branch
+4. type __webpack__
+5. __git add [files that you want to add]__
+5. __git commit -m "Your message"__
+6. __git push [your branch]__
+7. Create a pull request on github for code review
