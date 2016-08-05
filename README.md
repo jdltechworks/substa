@@ -1,3 +1,7 @@
+#SUBASTA Client
+
+Singel page application for subasta application
+
 ##Development Procedure:
 
 __Make sure to install webpack [npm install webpack -g]__
