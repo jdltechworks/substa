@@ -5,7 +5,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 if (!debug) {
-  console.log('Compiling from production');
+  console.log('Compiling for production');
 }
 
 function getBabelQuery () {

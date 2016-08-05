@@ -4,7 +4,8 @@
   "description": "Subasta Single page application version",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base dist --inline --hot --history-api-fallback"
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base dist --inline --hot --history-api-fallback",
+    "generate-docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -37,5 +38,9 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.4.0"
   }
 }

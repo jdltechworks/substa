@@ -1,3 +1,8 @@
+/**
+ * test description option
+ * @param  {object} entry [description]
+ * @return {object}       [description]
+ */
 export const addAuction = (entry) => {
 	return {
 		type: 'ADD_AUCTION',

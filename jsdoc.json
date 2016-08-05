@@ -1,0 +1,14 @@
+{
+  "source": {
+    "include": "./js/react",
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|dist|bootstrap/index.js|js/components/index.js)"
+  },
+  "opts": {
+    "template": "./node_modules/docdash",
+    "encoding": "utf8",
+    "destination": "./dist/documentation",
+    "recurse": true,
+    "verbose": true
+  }
+}
