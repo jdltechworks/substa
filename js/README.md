@@ -1,8 +1,8 @@
-# SUBASTA Client
+#SUBASTA Client
 
 Singel page application for subasta application
 
-## Development Procedure:
+##Development Procedure:
 
 __Make sure to install webpack [npm install webpack -g]__
 
@@ -12,7 +12,7 @@ __Make sure to install webpack [npm install webpack -g]__
 3. Mac or Linux __NODE_ENV=development__
 4. To start the local server __npm run dev__
 
-## Production procedure:
+##Production procedure:
 
 __Note: Still on your subasta folder using your terminal / command prompt__
 
@@ -25,7 +25,7 @@ __Note: Still on your subasta folder using your terminal / command prompt__
 6. __git push [your branch]__
 7. Create a pull request on github for code review
 
-## Generating a documentation
+##Generating a documentation
 
 1. Go to your subasta folder in your terminal
 2. npm run generate-docs
