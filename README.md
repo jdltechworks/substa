@@ -24,3 +24,8 @@ __Note: Still on your subasta folder using your terminal / command prompt__
 5. __git commit -m "Your message"__
 6. __git push [your branch]__
 7. Create a pull request on github for code review
+
+##Generating a documentation
+
+1. Go to your subasta folder in your terminal
+2. npm run generate-docs
