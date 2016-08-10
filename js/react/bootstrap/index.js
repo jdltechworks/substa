@@ -1,9 +1,9 @@
+import App from './containers';
 import React, { Component } from 'react';
-import { browserHistory, Router, Route, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './stores';
-import App from '../components';
-import Test from '../components/test';
+import { browserHistory, Router, Route, IndexRoute } from 'react-router';
+
 
 export default class Root extends Component {
 	render() {
@@ -11,7 +11,6 @@ export default class Root extends Component {
 			<Provider store={store}>
 				<Router history={history}>
 					<Route path="/" component={App}></Route>
-					<Route path="/test" component={Test}></Route>
 				</Router>
 			</Provider>
 		);

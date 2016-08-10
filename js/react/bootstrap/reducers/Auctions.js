@@ -1,29 +1,36 @@
+/** @module Reducers */
+import _ from 'lodash';
 
 /**
- * Reducer for the auction state
- * 
- * @param  {Object} state  [description]
- * @param  {Object} action [description]
- * @return {Object}        [description]
+ * [description]
+ * @param  {Object} state  current state of an auction
+ * @param  {[type]} action object to dispatch to our Auction reducer 
+ * @return {object}        current or next state
  */
-
-const Auctions = (state = {}, action) => {
-	return state;
-}
-
-/**
- * 
- */
-class redhorse {
-	/**
-	 * [constructor description]
-	 * @param  {int} a [description]
-	 * @param  {int} b [description]
-	 * @return {int}   [description]
-	 */
-	constructor(a, b) {
-
+const Auctions = (state = {
+	fetching: false,
+	collection: {}
+}, action) => {
+	
+	let reduced = {
+		IS_FETCHING: {
+			...state,
+			fetching: true,
+			collection: action.payload
+		},
+		FETCH_COMPLETED: {
+			...state,
+			fetching: false,
+			collection: action.payload
+		},
+		FETCH_ERROR: {
+			...state,
+			fetching: false,
+			collection: action.payload
+		}
 	}
+	
+	return _.isUndefined(reduced[action.type]) ? state: reduced[action.type];
 }
 
 export default Auctions;

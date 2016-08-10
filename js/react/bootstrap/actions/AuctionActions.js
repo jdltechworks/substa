@@ -1,39 +1,81 @@
+/* @module Actions */
+
 /**
  * test description option
- * @param  {object} entry [description]
+ * @param  {object} payload [description]
  * @return {object}       [description]
  */
-export const addAuction = (entry) => {
-	return {
-		type: 'ADD_AUCTION',
-		entry
+
+
+const END_POINT = () => {
+	let api = ''
+	if(_.eq(process.env.NODE_ENV, 'production')) {
+		api = '//subasta-jdltechworks.rhcloud.com/api';
+	} else {
+		api = '//localhost:8000/api';
+	}
+
+	return api;
+}
+
+export const fetchAuction = () => {
+	return (dispatch) => {
+
+		fetch(`${END_POINT()}/auction`)
+			.then((res) => {
+				
+				dispatch(isFetchingAuction());
+				
+				return res.json();
+			
+			}).then((json) => {
+				
+				dispatch(fetchedAuction(json));
+			
+			}).catch(err => dispatch(fetchingError(err)));
+		
 	};
+
 };
 
-export const updateAuction = (entry) => {
+export const isFetchingAuction = () => {
 	return {
-		type: 'UPDATE_AUCTION',
-		entry
+		type: 'IS_FETCHING',
+		payload: {}
 	}
 };
 
-export const deleteAuction = (entry) => {
+export const fetchingError = (payload) => {
+	return {
+		type: 'FETCH_ERROR',
+		payload: payload
+	}
+};
+
+export const fetchedAuction = (payload) => {
+	return {
+		type: 'FETCH_COMPLETED',
+		payload
+	}
+};
+
+export const deleteAuction = (payload) => {
 	return {
 		type: 'DELETE_AUCTION',
-		entry
+		payload
 	}
 };
 
-export const showAuctions = (entry) => {
+export const showAuctions = (payload) => {
 	return {
 		type: 'SHOW_ALL_AUCTIONS',
-		entry
+		payload
 	}
 };
 
-export const showAuctionbyId = (entry) => {
+export const showAuctionbyId = (payload) => {
 	return {
 		type: 'SHOW_AUCTION_BY_ID',
-		entry
+		payload
 	}
 };
