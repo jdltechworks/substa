@@ -33,7 +33,7 @@ module.exports = [
     context: path.join(__dirname, "/"),
     devtool: debug ? "inline-sourcemap" : null,
     entry: [
-      "./js/react/index.js",
+      "./src/index.js",
       "./assets/sass/index.scss"
     ],
     // externals: [

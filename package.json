@@ -33,6 +33,7 @@
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
+    "redux-form": "^5.3.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.0",
@@ -42,7 +43,10 @@
   },
   "dependencies": {
     "docdash": "^0.4.0",
-    "jsdoc": "^3.4.0",
-    "redux-form": "^5.3.2"
+    "jsdoc": "^3.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jdltechworks/substa.git"
   }
 }

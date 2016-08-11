@@ -6,43 +6,38 @@ import * as actionCreators from '../actions/AuctionActions';
 import _ from 'lodash';
 
 
-const _stateToProps = (state) => {
-	return {
-		auction: state.Auctions
-	}
-}
-
 const _props = (dispatch) => {
 	return bindActionCreators(actionCreators, dispatch);
 }
 
-class RootComponent extends Component {
+@connect((state) => {
+	return {
+		auction: state.Auctions
+	};
+}, _props)
+
+export default class Auctions extends Component {
 	render() {
 		let { auction } = this.props;
 		let { collection } = auction;
-		let display = !_.isEmpty(collection) ? collection.map((auction, key) => (
+		let display = _.isEmpty(collection) ? 
+			<div>Is Loading</div> 
+			: 
+			collection.map((auction, key) => (
 				<li key={key}>
 					<h2>{auction.title}</h2>
 					<p>{auction.description}</p>
 				</li>
-		)) :
-		<div>Is Loading</div>;
+		));
 		return(
-			<div className="page">
-				<nav className="">Nav in the future</nav>
+			<section className="main">
 				<ul>
 					{display}
 				</ul>
-				
-				{this.props.children}
-			</div>
+			</section>
 		);
 	}
 	componentDidMount() {
 		this.props.fetchAuction();
 	}
 }
-
-const App = connect(_stateToProps, _props)(RootComponent);
-
-export default App;
