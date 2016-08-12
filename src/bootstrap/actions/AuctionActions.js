@@ -1,22 +1,5 @@
 /* @module Actions */
-
-/**
- * test description option
- * @param  {object} payload [description]
- * @return {object}       [description]
- */
-
-
-const END_POINT = () => {
-	let api = ''
-	if(_.eq(process.env.NODE_ENV, 'production')) {
-		api = '//subasta-jdltechworks.rhcloud.com/api';
-	} else {
-		api = '//localhost:8000/api';
-	}
-
-	return api;
-}
+import { END_POINT } from '../helpers';
 
 export const fetchAuction = () => {
 	return (dispatch) => {
