@@ -6,8 +6,10 @@ class Navbar extends Component {
 		return(
 			<header>
 				<nav>
-					<Link to="/auction">Auction</Link>
-					<Link to="/auction/add">Auction</Link>
+					<ul>
+						<li><Link to="/auction">Auction</Link></li>
+						<li><Link to="/auction/add">Add Auction</Link></li>
+					</ul>
 				</nav>
 			</header>
 		);

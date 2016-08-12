@@ -5,39 +5,33 @@ import _ from 'lodash';
 const FIELDS = {
 	title: {
 		id: 0,
-		type: 'text',
-		label: 'Title of the auction',
-		component: 'input'
+		type: 'input',
+		label: 'Title of the auction'
 	},
 	endDate: {
 		id: 1,
-		type: 'text',
+		type: 'input',
 		label: 'end date',
-		component: 'input'
 	},
 	minBid: {
 		id: 2,
-		type: 'text',
+		type: 'input',
 		label: 'minimum bid',
-		component: 'input'
 	},
 	images: {
 		id: 3,
-		type: 'text',
+		type: 'input',
 		label: 'images',
-		component: 'input'
 	},
 	startDate: {
 		id: 4,
-		type: 'text',
+		type: 'input',
 		label: 'Start date',
-		component: 'input'
 	},
 	'description': {
 		id: 5,
 		type: 'textarea',
-		label: 'test',
-		component: 'textarea'
+		label: 'test'
 	}
 };
 
@@ -48,9 +42,33 @@ const validate = (values) => {
 			errors[field] = `${field} is blank`;
 		}
 	});
-	console.log(errors);
+
 	return errors;
 }
+
+const domOnlyProps = ({
+  initialValue,
+  autofill,
+  onUpdate,
+  valid,
+  invalid,
+  dirty,
+  pristine,
+  active,
+  touched,
+  visited,
+  autofilled,
+  asyncValidating,
+  error,
+  ...domProps }) => domProps;
+
+const renderField = (props) => {
+	console.log(props);
+	return (<div>
+		<props.type type={props.type} {...domOnlyProps(props)}/>
+		<div>{props.touched ? props.error : ''}</div>
+	</div>);
+};
 
 @reduxForm({
 	form: 'new-auction',
@@ -62,19 +80,17 @@ export default class AddAuction extends Component {
 	submitAuction(props) {
 		console.log(props);
 	}
-	renderField(fieldConfig, field) {
-
-
-		return <Field key={fieldConfig.id} type={fieldConfig.type} name={field} component={fieldConfig.component} />
-	}
 	render() {
 		let { handleSubmit } = this.props;
 		return(
 			<form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
-				{_.map(FIELDS, this.renderField.bind(this))}
+				{_.map(FIELDS, this.outputField.bind(this))}
 				<button>SUbmit</button>
 			</form>
 		);
+	}
+	outputField(fieldConfig, field) {
+		return <Field key={fieldConfig.id} name={field} type={fieldConfig.type} component={renderField}/>
 	}
 }
 
