@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-const Navbar = () => {
-	return(
-		<nav>
-			<Link to="/auction">Auction</Link>
-		</nav>
-	);
+class Navbar extends Component {
+	render() {
+		return(
+			<header>
+				<nav>
+					<Link to="/auction">Auction</Link>
+				</nav>
+			</header>
+		);
+	}
 }
 
 export default Navbar;

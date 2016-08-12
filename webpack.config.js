@@ -12,7 +12,7 @@ function getBabelQuery () {
   var queryString = '';
   var query = {
     presets: ['react', 'es2015', 'stage-0'],
-    plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
+    plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy', 'react-hot-loader/babel'],
   };
   for (var queryKey in query) {
     var queryList = query[queryKey];
@@ -44,7 +44,7 @@ module.exports = [
         {
           test: /\.jsx?$/,
           exclude: /(node_modules|bower_components|dist)/,
-          loaders: ['react-hot', 'babel-loader?' + getBabelQuery()]
+          loaders: ['babel-loader?' + getBabelQuery()]
         },
         {
           test: /(img|fonts|\.(png|jpg|eot|woff2|woff|ttf|svg))/,

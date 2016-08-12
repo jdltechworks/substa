@@ -10,6 +10,11 @@ const _props = (dispatch) => {
 	return bindActionCreators(actionCreators, dispatch);
 }
 
+/**
+ * Connect reducer to Auction component
+ * @param  {object} store / state
+ * @return {object} reducer 
+ */
 @connect((state) => {
 	return {
 		auction: state.Auctions
