@@ -46,4 +46,7 @@ export default class Auctions extends Component {
 	componentDidMount() {
 		this.props.fetchAuction();
 	}
+	componentWillUnmount() {
+		this.props.isFetchingAuction();
+	}
 }
