@@ -7,6 +7,7 @@ class Navbar extends Component {
 			<header>
 				<nav>
 					<Link to="/auction">Auction</Link>
+					<Link to="/auction/add">Auction</Link>
 				</nav>
 			</header>
 		);
