@@ -65,14 +65,14 @@ const renderField = (props) => {
 				<div>{props.touched ? props.error : ''}</div>
 			</div>
 		);
-	} 
+	}
 	noType = _.omit(noLabel(), 'type');
 	return (
-			<div>
+			<div className="container">
 			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} {...domOnlyProps(noType)} />
 			<div>{props.touched ? props.error : ''}</div>
 		</div>
-	);		
+	);
 
 };
 
@@ -95,9 +95,9 @@ export default class AddAuction extends Component {
 			method: 'POST',
 			body
 		})
-			.then((res) => { 
+			.then((res) => {
 				console.log(res);
-				return res.json() 
+				return res.json()
 			})
 			.then(body => console.log(body))
 			.catch(err => console.log(err));
@@ -113,7 +113,6 @@ export default class AddAuction extends Component {
 		);
 	}
 	outputField(fieldConfig, field) {
-		return <Field key={`field-${fieldConfig.id}`} name={field} component={renderField} {...fieldConfig} />
+		return <Field key={field} name={field} component={renderField} {...fieldConfig} />
 	}
 }
-

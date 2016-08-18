@@ -3,9 +3,12 @@ var debug = !_.eq(process.env.NODE_ENV, 'production');
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 if (!debug) {
   console.log('Compiling for production');
+} else {
+  console.log('You are running in debug mode');
 }
 
 function getBabelQuery () {
@@ -47,10 +50,6 @@ module.exports = [
           loaders: ['babel-loader?' + getBabelQuery()]
         },
         {
-          test: /(img|fonts|\.(png|jpg|eot|woff2|woff|ttf|svg))/,
-          loaders: ["react-hot", "file?name=" + (debug ? "css/" : "../") + "[path][name].[ext]&context=assets/"],
-        },
-        {
           test: /\.scss$/,
           loader: debug ? null : ExtractTextPlugin.extract(
             'style',
@@ -61,25 +60,31 @@ module.exports = [
       ]
     },
     output: {
-      path: __dirname + "/dist/css",
-      filename: "../js/index.min.js"
+      path: __dirname + "/dist",
+      filename: "./js/index.min.js",
     },
     plugins: debug ? [
         new webpack.DefinePlugin({
-          "process.env": { 
+          "process.env": {
              NODE_ENV: JSON.stringify("development")
            }
         })
       ] : [
       new webpack.DefinePlugin({
-          "process.env": { 
+          "process.env": {
              NODE_ENV: JSON.stringify("production")
            }
         }),
-      new ExtractTextPlugin('../css/index.css'),
+      new ExtractTextPlugin('./css/index.min.css'),
+      new TransferWebpackPlugin([
+        { from: 'fonts', to: 'fonts'},
+        { from: 'img', to: 'img'}
+      ],
+      path.join(__dirname, '/assets')
+      ),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({ minimize: true, mangle: false, sourcemap: true })
+      new webpack.optimize.UglifyJsPlugin({ minimize: true, mangle: false, sourcemap: false })
     ],
   },
 ];

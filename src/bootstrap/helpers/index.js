@@ -16,12 +16,11 @@ export const domOnlyProps = ({
   ...domProps }) => domProps;
 
 export const END_POINT = () => {
-  let api = ''
+  let api = '//localhost:8000/api'
   if(_.eq(process.env.NODE_ENV, 'production')) {
     api = '//subasta-jdltechworks.rhcloud.com/api';
-  } else {
-    api = '//localhost:8000/api';
   }
-
+  console.log(api);
+  console.log(process.env.NODE_ENV);
   return api;
 }

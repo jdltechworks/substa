@@ -13,7 +13,7 @@ const _props = (dispatch) => {
 /**
  * Connect reducer to Auction component
  * @param  {object} store / state
- * @return {object} reducer 
+ * @return {object} reducer
  */
 @connect((state) => {
 	return {
@@ -25,9 +25,9 @@ export default class Auctions extends Component {
 	render() {
 		let { auction } = this.props;
 		let { collection } = auction;
-		let display = _.isEmpty(collection) ? 
-			<div>Is Loading</div> 
-			: 
+		let display = _.isEmpty(collection) ?
+			<div>Is Loading</div>
+			:
 			collection.map((auction, key) => (
 				<li key={key}>
 					<img src={auction.image} />
@@ -37,6 +37,10 @@ export default class Auctions extends Component {
 		));
 		return(
 			<section className="main">
+				<span class="glyphicon glyphicon-eur"></span>
+				<span class="glyphicon glyphicon-pencil"></span>
+				<span class="glyphicon glyphicon-envelope"></span>
+				<span class="glyphicon glyphicon-console"></span>
 				<ul>
 					{display}
 				</ul>
