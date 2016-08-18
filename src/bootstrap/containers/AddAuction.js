@@ -60,16 +60,16 @@ const renderField = (props) => {
 	if(_.eq(props.type, 'textarea')) {
 		noType = _.omit(noLabel(), 'type');
 		return (
-			<div>
-				<props.type name={props.name} {...domOnlyProps(noType)} />
+			<div className="form-group">
+				<props.type name={props.name} className="form-control" {...domOnlyProps(noType)} />
 				<div>{props.touched ? props.error : ''}</div>
 			</div>
 		);
 	}
 	noType = _.omit(noLabel(), 'type');
 	return (
-			<div className="container">
-			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} {...domOnlyProps(noType)} />
+			<div className="form-group">
+			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} className="form-control" {...domOnlyProps(noType)} />
 			<div>{props.touched ? props.error : ''}</div>
 		</div>
 	);
