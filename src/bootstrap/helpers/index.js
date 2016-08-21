@@ -13,6 +13,7 @@ export const domOnlyProps = ({
   asyncValidating,
   error,
   name,
+  input,
   ...domProps }) => domProps;
 
 export const END_POINT = () => {
@@ -23,4 +24,15 @@ export const END_POINT = () => {
   console.log(api);
   console.log(process.env.NODE_ENV);
   return api;
+}
+
+export const validate = (values) => {
+  const errors = {};
+  _.each(FIELDS, (type, field) => {
+    if(!values[field]) {
+      errors[field] = `${field} is blank`;
+    }
+  });
+
+  return errors;
 }

@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import Dropzone from 'react-dropzone';
 import { bindActionCreators } from 'redux';
-import { domOnlyProps, END_POINT } from '../helpers';
+import { domOnlyProps, END_POINT, validate } from '../helpers';
 import { Field, reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
 
@@ -34,16 +34,7 @@ const FIELDS = {
 	}
 };
 
-const validate = (values) => {
-	const errors = {};
-	_.each(FIELDS, (type, field) => {
-		if(!values[field]) {
-			errors[field] = `${field} is blank`;
-		}
-	});
 
-	return errors;
-}
 
 const renderField = (props) => {
 

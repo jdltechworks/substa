@@ -37,10 +37,6 @@ export default class Auctions extends Component {
 		));
 		return(
 			<section className="main">
-				<span class="glyphicon glyphicon-eur"></span>
-				<span class="glyphicon glyphicon-pencil"></span>
-				<span class="glyphicon glyphicon-envelope"></span>
-				<span class="glyphicon glyphicon-console"></span>
 				<ul>
 					{display}
 				</ul>
