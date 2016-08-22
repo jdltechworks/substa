@@ -24,7 +24,7 @@ const validate = (values) => {
 }
 
 const renderField = (props) => {
-
+	console.log(props);
 	let noLabel = () => {
 		let newProps = _.cloneDeep(props);
 
@@ -35,15 +35,19 @@ const renderField = (props) => {
 
 
 	let noType = _.omit(noLabel(), ['type', 'meta']);
-	console.log(props);
+
 	return (
 			<div className="form-group">
-			<label>{props.label}</label>
-			<Dropzone onDrop={(data, e) => { props.input.onChange(data) }} {...domOnlyProps(noType)} />
-			<div>{props.touched ? props.error : ''}</div>
-		</div>
+				<label>{props.label}</label>
+				<Dropzone onDrop={(data, e) => { props.input.onChange(data) }} multiple={true} {...domOnlyProps(noType)} />
+				<div>{props.touched ? props.error : ''}</div>
+			</div>
 	);
 
+};
+
+const	outputField = (fieldConfig, field) => {
+	return <Field key={field} name={field} component={renderField} {...fieldConfig} />
 };
 
 @reduxForm({
@@ -52,24 +56,30 @@ const renderField = (props) => {
 	validate
 })
 
-export default class Uploader extends Component {
-	uploader(props) {
-		console.log('upload data')
-		console.log(props);
-	}
-	upload(a) {
-		console.log(a);
+class Uploader extends React.Component {
+	state = {
+		files: []
+	};
+	upload(props){
+		let { files } = this.state;
+		console.log(props.file);
+		for( var key in props.file) {
+			files.push(props.file[key]);
+		}
+		this.setState({files});
 	}
 	render() {
 		let { handleSubmit } = this.props;
 		return(
-			<form onSubmit={handleSubmit((props)=>{this.upload(props)})}>
-				{_.map(FIELDS, this.outputField.bind(this))}
-				<button className="btn btn-info">Uploader</button>
-			</form>
+			<div className="updloader">
+				<form onSubmit={handleSubmit((props)=>{this.upload(props)})}>
+					{_.map(FIELDS, outputField.bind(this))}
+					<button className="btn btn-info">Uploader</button>
+				</form>
+				{this.props.children}
+			</div>
 		);
 	}
-	outputField(fieldConfig, field) {
-		return <Field key={field} name={field} component={renderField} {...fieldConfig} />
-	}
 }
+
+export default Uploader;

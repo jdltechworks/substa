@@ -2,70 +2,68 @@
 import _ from 'lodash';
 import Dropzone from 'react-dropzone';
 import { bindActionCreators } from 'redux';
-import { domOnlyProps, END_POINT, validate } from '../helpers';
-import { Field, reduxForm } from 'redux-form';
+import { END_POINT } from '../helpers';
+import { reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
+
+const domOnlyProps = ({
+  initialValue,
+  autofill,
+  onUpdate,
+  valid,
+  invalid,
+  dirty,
+  pristine,
+  active,
+  touched,
+  visited,
+  autofilled,
+  asyncValidating,
+  name,
+  input,
+  error,
+  tag,
+  ...domProps }) => domProps;
 
 const FIELDS = {
 	title: {
-		id: 1,
-		type: 'input',
+		tag: 'input',
+		type: 'text',
 		label: 'Title of the auction'
 	},
 	endDate: {
-		id: 2,
-		type: 'input',
+		tag: 'input',
+		type: 'text',
 		label: 'end date',
 	},
 	minBid: {
-		id: 3,
-		type: 'input',
+		tag: 'input',
+		type: 'text',
 		label: 'minimum bid',
 	},
 	startDate: {
-		id: 4,
-		type: 'input',
+		type: 'text',
+		tag: 'input',
 		label: 'Start date',
 	},
 	description: {
-		id: 5,
-		type: 'textarea',
+		tag: 'textarea',
+		type: 'text',
 		label: 'test'
 	}
 };
 
 
+const validate = (values) => {
+  const errors = {};
+  _.each(FIELDS, (type, field) => {
+    if(!values[field]) {
+      errors[field] = `${field} is blank`;
+    }
+  });
 
-const renderField = (props) => {
-
-	let noLabel = () => {
-		let newProps = _.cloneDeep(props);
-
-		delete newProps.label;
-
-		return newProps;
-	}
-
-	let noType = null;
-
-	if(_.eq(props.type, 'textarea')) {
-		noType = _.omit(noLabel(), 'type');
-		return (
-			<div className="form-group">
-				<props.type name={props.name} className="form-control" {...domOnlyProps(noType)} />
-				<div>{props.touched ? props.error : ''}</div>
-			</div>
-		);
-	}
-	noType = _.omit(noLabel(), 'type');
-	return (
-			<div className="form-group">
-			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} className="form-control" {...domOnlyProps(noType)} />
-			<div>{props.touched ? props.error : ''}</div>
-		</div>
-	);
-
-};
+  return errors;
+}
 
 @reduxForm({
 	form: 'new-auction',
@@ -95,15 +93,35 @@ export default class AddAuction extends Component {
 
 	}
 	render() {
-		let { handleSubmit } = this.props;
+		let { fields: { title, endDate, startDate, description, minBid },
+		handleSubmit } = this.props;
 		return(
 			<form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
-				{_.map(FIELDS, this.outputField.bind(this))}
+			<div className="panel panel-default">
+			<div class="panel-heading"><h3>Add Auction</h3></div>
+			<div class="panel-body">
+				{_.map(FIELDS, this.renderField.bind(this))}
 				<button>SUbmit</button>
+			</div>
+			</div>
 			</form>
 		);
 	}
-	outputField(fieldConfig, field) {
-		return <Field key={field} name={field} component={renderField} {...fieldConfig} />
+
+	renderField(fieldConfig, field) {
+		const fieldHelper = this.props.fields[field];
+		var i = 0;
+		if(_.includes(['textarea', 'selectbox'], fieldConfig.tag)) {
+			return ( <div key={field} className="form-group">
+				<fieldConfig.tag name={field} className="form-control" {...domOnlyProps(fieldHelper)} />
+				 { fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div> }
+				</div>
+			);
+		}
+		return( <div key={field} className="form-group">
+		<fieldConfig.tag type={fieldConfig.type} name={field} className="form-control" {...domOnlyProps(fieldHelper)} />
+		 {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
+		</div> );
 	}
+
 }

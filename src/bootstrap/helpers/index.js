@@ -25,14 +25,3 @@ export const END_POINT = () => {
   console.log(process.env.NODE_ENV);
   return api;
 }
-
-export const validate = (values) => {
-  const errors = {};
-  _.each(FIELDS, (type, field) => {
-    if(!values[field]) {
-      errors[field] = `${field} is blank`;
-    }
-  });
-
-  return errors;
-}

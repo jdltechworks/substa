@@ -1,7 +1,6 @@
 import App from './containers';
 import Auctions from './containers/Auctions';
 import AddAuction from './containers/AddAuction';
-import Uploader from './containers/Uploader';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store, { history } from './stores';
@@ -15,7 +14,6 @@ const Root = () => {
         <Route path="/" component={App}>
           <Route path="/auction" component={Auctions}></Route>
           <Route path="/auction/add" component={AddAuction}></Route>
-          <Route path="/upload" component={Uploader}></Route>
         </Route>
       </Router>
     </Provider>
