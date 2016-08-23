@@ -6,36 +6,36 @@ import { reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
 
 const FIELDS = {
-	title: {
-		tag: 'input',
-		type: 'text',
-		label: 'Title of the auction'
-	},
-	image: {
-		tag: 'input',
-		type:'file',
-		label: 'Image upload'
-	},
-	endDate: {
-		tag: 'input',
-		type: 'text',
-		label: 'end date',
-	},
-	minBid: {
-		tag: 'input',
-		type: 'text',
-		label: 'minimum bid',
-	},
-	startDate: {
-		type: 'text',
-		tag: 'input',
-		label: 'Start date',
-	},
-	description: {
-		tag: 'textarea',
-		type: 'text',
-		label: 'test'
-	}
+  title: {
+    tag: 'input',
+    type: 'text',
+    label: 'Title of the auction'
+  },
+  image: {
+    tag: 'input',
+    type:'file',
+    label: 'Image upload'
+  },
+  endDate: {
+    tag: 'input',
+    type: 'text',
+    label: 'end date',
+  },
+  minBid: {
+    tag: 'input',
+    type: 'text',
+    label: 'minimum bid',
+  },
+  startDate: {
+    type: 'text',
+    tag: 'input',
+    label: 'Start date',
+  },
+  description: {
+    tag: 'textarea',
+    type: 'text',
+    label: 'test'
+  }
 };
 
 
@@ -51,56 +51,56 @@ const validate = (values) => {
 }
 
 @reduxForm({
-	form: 'new-auction',
-	fields: _.keys(FIELDS),
-	validate
+  form: 'new-auction',
+  fields: _.keys(FIELDS),
+  validate
 })
 
 export default class AddAuction extends Component {
-	state = {
-		files: []
-	};
-	submitAuction(props) {
-		let body = new FormData();
-		let { files } = this.state;
-		let _props = _.omit(props, 'image');
-		let _data = _.keys(_props);
-		let headers = new Headers();
-		headers.set("Content-Type", "multipart/form-data");
-		for(var key in props.image) {
-			body.append('image', files[key]);
-		}
+  state = {
+    files: []
+  };
+  submitAuction(props) {
+    let body = new FormData();
+    let { files } = this.state;
+    let _props = _.omit(props, 'image');
+    let _data = _.keys(_props);
+    let headers = new Headers();
+    headers.set("Content-Type", "multipart/form-data");
+    for(var key in props.image) {
+      body.append('image', files[key]);
+    }
 
-		_.each(_data, ( key ) => {
-			body.append(key, _props[key]);
-		});
-		
+    _.each(_data, ( key ) => {
+      body.append(key, _props[key]);
+    });
+    
 
-		fetch(`${END_POINT()}/auction`, {
-			method: 'POST',
-			body,
-		})
-			.then((res) => {
-				console.log(res);
-				return res.json()
-			})
-			.then(body => console.log(body))
-			.catch(err => console.log(err));
+    fetch(`${END_POINT()}/auction`, {
+      method: 'POST',
+      body,
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json()
+      })
+      .then(body => console.log(body))
+      .catch(err => console.log(err));
 
-	}
-	render() {
-		let { handleSubmit } = this.props;
-		console.log(this.state.files);
-		return(
-			<form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
-			<div className="panel panel-default">
-			<div class="panel-heading"><h3>Add Auction</h3></div>
-			<div class="panel-body">
-				{_.map(FIELDS, renderField.bind(this))}
-				<button>SUbmit</button>
-			</div>
-			</div>
-			</form>
-		);
-	}
+  }
+  render() {
+    let { handleSubmit } = this.props;
+    console.log(this.state.files);
+    return(
+      <form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
+      <div className="panel panel-default">
+      <div class="panel-heading"><h3>Add Auction</h3></div>
+      <div class="panel-body">
+        {_.map(FIELDS, renderField.bind(this))}
+        <button>SUbmit</button>
+      </div>
+      </div>
+      </form>
+    );
+  }
 }
