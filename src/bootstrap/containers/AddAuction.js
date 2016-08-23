@@ -69,6 +69,7 @@ const renderField = (props) => {
 	noType = _.omit(noLabel(), 'type');
 	return (
 			<div className="container">
+			<label>props.label</label>
 			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} {...domOnlyProps(noType)} />
 			<div>{props.touched ? props.error : ''}</div>
 		</div>
