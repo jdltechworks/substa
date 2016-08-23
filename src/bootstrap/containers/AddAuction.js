@@ -1,35 +1,20 @@
 
 import _ from 'lodash';
-import Dropzone from 'react-dropzone';
 import { bindActionCreators } from 'redux';
-import { END_POINT } from '../helpers';
+import { END_POINT, renderField, domOnlyProps } from '../helpers';
 import { reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
-
-const domOnlyProps = ({
-  initialValue,
-  autofill,
-  onUpdate,
-  valid,
-  invalid,
-  dirty,
-  pristine,
-  active,
-  touched,
-  visited,
-  autofilled,
-  asyncValidating,
-  name,
-  input,
-  error,
-  tag,
-  ...domProps }) => domProps;
 
 const FIELDS = {
 	title: {
 		tag: 'input',
 		type: 'text',
 		label: 'Title of the auction'
+	},
+	image: {
+		tag: 'input',
+		type:'file',
+		label: 'Image upload'
 	},
 	endDate: {
 		tag: 'input',
@@ -72,17 +57,28 @@ const validate = (values) => {
 })
 
 export default class AddAuction extends Component {
+	state = {
+		files: []
+	};
 	submitAuction(props) {
-		//console.log(props);
 		let body = new FormData();
+		let { files } = this.state;
+		let _props = _.omit(props, 'image');
+		let _data = _.keys(_props);
+		let headers = new Headers();
+		headers.set("Content-Type", "multipart/form-data");
+		for(var key in props.image) {
+			body.append('image', files[key]);
+		}
 
-		let _data = _.keys(props);
-		_.each(_data, (key) => {
-			body.append(key, props[key]);
+		_.each(_data, ( key ) => {
+			body.append(key, _props[key]);
 		});
+		
+
 		fetch(`${END_POINT()}/auction`, {
 			method: 'POST',
-			body
+			body,
 		})
 			.then((res) => {
 				console.log(res);
@@ -93,35 +89,18 @@ export default class AddAuction extends Component {
 
 	}
 	render() {
-		let { fields: { title, endDate, startDate, description, minBid },
-		handleSubmit } = this.props;
+		let { handleSubmit } = this.props;
+		console.log(this.state.files);
 		return(
 			<form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
 			<div className="panel panel-default">
 			<div class="panel-heading"><h3>Add Auction</h3></div>
 			<div class="panel-body">
-				{_.map(FIELDS, this.renderField.bind(this))}
+				{_.map(FIELDS, renderField.bind(this))}
 				<button>SUbmit</button>
 			</div>
 			</div>
 			</form>
 		);
 	}
-
-	renderField(fieldConfig, field) {
-		const fieldHelper = this.props.fields[field];
-		var i = 0;
-		if(_.includes(['textarea', 'selectbox'], fieldConfig.tag)) {
-			return ( <div key={field} className="form-group">
-				<fieldConfig.tag name={field} className="form-control" {...domOnlyProps(fieldHelper)} />
-				 { fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div> }
-				</div>
-			);
-		}
-		return( <div key={field} className="form-group">
-		<fieldConfig.tag type={fieldConfig.type} name={field} className="form-control" {...domOnlyProps(fieldHelper)} />
-		 {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
-		</div> );
-	}
-
 }
