@@ -1,119 +1,106 @@
 
 import _ from 'lodash';
-import Dropzone from 'react-dropzone';
 import { bindActionCreators } from 'redux';
-import { domOnlyProps, END_POINT } from '../helpers';
-import { Field, reduxForm } from 'redux-form';
+import { END_POINT, renderField, domOnlyProps } from '../helpers';
+import { reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
 
 const FIELDS = {
-	title: {
-		id: 1,
-		type: 'input',
-		label: 'Title of the auction'
-	},
-	endDate: {
-		id: 2,
-		type: 'input',
-		label: 'end date',
-	},
-	minBid: {
-		id: 3,
-		type: 'input',
-		label: 'minimum bid',
-	},
-	startDate: {
-		id: 4,
-		type: 'input',
-		label: 'Start date',
-	},
-	description: {
-		id: 5,
-		type: 'textarea',
-		label: 'test'
-	}
+  title: {
+    tag: 'input',
+    type: 'text',
+    label: 'Title of the auction'
+  },
+  image: {
+    tag: 'input',
+    type:'file',
+    label: 'Image upload'
+  },
+  endDate: {
+    tag: 'input',
+    type: 'text',
+    label: 'end date',
+  },
+  minBid: {
+    tag: 'input',
+    type: 'text',
+    label: 'minimum bid',
+  },
+  startDate: {
+    type: 'text',
+    tag: 'input',
+    label: 'Start date',
+  },
+  description: {
+    tag: 'textarea',
+    type: 'text',
+    label: 'test'
+  }
 };
+
 
 const validate = (values) => {
-	const errors = {};
-	_.each(FIELDS, (type, field) => {
-		if(!values[field]) {
-			errors[field] = `${field} is blank`;
-		}
-	});
+  const errors = {};
+  _.each(FIELDS, (type, field) => {
+    if(!values[field]) {
+      errors[field] = `${field} is blank`;
+    }
+  });
 
-	return errors;
+  return errors;
 }
 
-const renderField = (props) => {
-
-	let noLabel = () => {
-		let newProps = _.cloneDeep(props);
-
-		delete newProps.label;
-
-		return newProps;
-	}
-
-	let noType = null;
-
-	if(_.eq(props.type, 'textarea')) {
-		noType = _.omit(noLabel(), 'type');
-		return (
-			<div>
-				<props.type name={props.name} {...domOnlyProps(noType)} />
-				<div>{props.touched ? props.error : ''}</div>
-			</div>
-		);
-	}
-	noType = _.omit(noLabel(), 'type');
-	return (
-			<div className="container">
-			<label>props.label</label>
-			<props.type type={_.eq(props.type, 'input') ? 'text' : null } name={props.name} {...domOnlyProps(noType)} />
-			<div>{props.touched ? props.error : ''}</div>
-		</div>
-	);
-
-};
-
 @reduxForm({
-	form: 'new-auction',
-	fields: _.keys(FIELDS),
-	validate
+  form: 'new-auction',
+  fields: _.keys(FIELDS),
+  validate
 })
 
 export default class AddAuction extends Component {
-	submitAuction(props) {
-		//console.log(props);
-		let body = new FormData();
+  state = {
+    files: []
+  };
+  submitAuction(props) {
+    let body = new FormData();
+    let { files } = this.state;
+    let _props = _.omit(props, 'image');
+    let _data = _.keys(_props);
+    let headers = new Headers();
+    headers.set("Content-Type", "multipart/form-data");
+    for(var key in props.image) {
+      body.append('image', files[key]);
+    }
 
-		let _data = _.keys(props);
-		_.each(_data, (key) => {
-			body.append(key, props[key]);
-		});
-		fetch(`${END_POINT()}/auction`, {
-			method: 'POST',
-			body
-		})
-			.then((res) => {
-				console.log(res);
-				return res.json()
-			})
-			.then(body => console.log(body))
-			.catch(err => console.log(err));
+    _.each(_data, ( key ) => {
+      body.append(key, _props[key]);
+    });
+    
 
-	}
-	render() {
-		let { handleSubmit } = this.props;
-		return(
-			<form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
-				{_.map(FIELDS, this.outputField.bind(this))}
-				<button>SUbmit</button>
-			</form>
-		);
-	}
-	outputField(fieldConfig, field) {
-		return <Field key={field} name={field} component={renderField} {...fieldConfig} />
-	}
+    fetch(`${END_POINT()}/auction`, {
+      method: 'POST',
+      body,
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json()
+      })
+      .then(body => console.log(body))
+      .catch(err => console.log(err));
+
+  }
+  render() {
+    let { handleSubmit } = this.props;
+    console.log(this.state.files);
+    return(
+      <form onSubmit={handleSubmit((props) => this.submitAuction(props))}>
+      <div className="panel panel-default">
+      <div class="panel-heading"><h3>Add Auction</h3></div>
+      <div class="panel-body">
+        {_.map(FIELDS, renderField.bind(this))}
+        <button>SUbmit</button>
+      </div>
+      </div>
+      </form>
+    );
+  }
 }
