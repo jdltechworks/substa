@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { END_POINT, renderField, domOnlyProps } from '../helpers';
 import { reduxForm } from 'redux-form';
 import React, { Component, PropTypes } from 'react';
+import formGroup from '../components/formGroup';
 
 const FIELDS = {
   title: {
@@ -56,6 +57,7 @@ const validate = (values) => {
   validate
 })
 
+/*
 export default class AddAuction extends Component {
   state = {
     files: []
@@ -103,4 +105,29 @@ export default class AddAuction extends Component {
       </form>
     );
   }
+} */
+
+export default class AddAuction extends Component {
+	render() {
+		return 
+			<div className="block block-form add-auction">
+				<h1>Post Auction</h1>
+				<form>
+					<formGroupText label="title" placeholder="enter title" id="fld-title" />
+					<formGroup label="title" placeholder="enter title" id="fld-title" />
+				</form>
+			</div>;
+	}
+}
+
+class formGroupText extends Component { 
+	render() {
+		return(
+			<div className="form-group">
+				hello
+				<label>{this.props.label}</label>
+				<input type="email" placeholder="{this.props.placeholder}" id="{this.props.id}" className="form-control" />
+			</div>
+		);
+	}
 }

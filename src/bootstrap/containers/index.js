@@ -6,9 +6,9 @@ class App extends Component {
 	render() {
 		return(
 			<div class="page">
+				<Navbar />
 				<div className="page-inner">
 					<div className="container">
-						<Navbar />
 						{this.props.children}
 					</div>
 			</div>
