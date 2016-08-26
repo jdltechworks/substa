@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store, { history } from './stores';
 import { browserHistory, Router, Route, IndexRoute } from 'react-router';
+import Login from './containers/Login';
 
 
 const Root = () => {
@@ -14,6 +15,7 @@ const Root = () => {
         <Route path="/" component={App}>
           <Route path="/auction" component={Auctions}></Route>
           <Route path="/auction/add" component={AddAuction}></Route>
+          <Route path="/login" component={Login}></Route>
         </Route>
       </Router>
     </Provider>

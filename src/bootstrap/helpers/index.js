@@ -21,8 +21,8 @@ export const END_POINT = () => {
  * @return {react component}             return an html that is generated from react
  */
 export const renderField = function(fieldConfig, field) {
-  const { uploadedFiles } = this.state;
-  const { images, uploadImage } = this.props;
+  //const { uploadedFiles } = this.state;
+  //const { images, uploadImage } = this.props;
 
   if(_.includes(['textarea', 'selectbox'], fieldConfig.tag)) {
     return ( 
@@ -38,6 +38,8 @@ export const renderField = function(fieldConfig, field) {
     );
   }
   if(_.eq(fieldConfig.type, 'file')) {
+    const { uploadedFiles } = this.state;
+    const { images, uploadImage } = this.props;
     return (
       <Field key={field} name={field} component={(_field) => {
         let { meta, input } = _field;
