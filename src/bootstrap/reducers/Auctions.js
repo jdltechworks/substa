@@ -11,22 +11,22 @@ const Auctions = (state = {
 	fetching: false,
 	collection: {}
 }, action) => {
-	
+	let { payload } = action;
 	let reduced = {
 		IS_FETCHING: {
 			...state,
 			fetching: true,
-			collection: action.payload
+			collection: payload
 		},
 		FETCH_COMPLETED: {
 			...state,
 			fetching: false,
-			collection: action.payload
+			collection: payload
 		},
 		FETCH_ERROR: {
 			...state,
 			fetching: false,
-			collection: action.payload
+			collection: payload
 		}
 	}
 	

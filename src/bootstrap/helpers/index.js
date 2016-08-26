@@ -1,25 +1,7 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import _ from 'lodash';
-
-export const domOnlyProps = ({
-  initialValue,
-  autofill,
-  onUpdate,
-  valid,
-  invalid,
-  dirty,
-  pristine,
-  active,
-  touched,
-  visited,
-  autofilled,
-  asyncValidating,
-  name,
-  input,
-  error,
-  tag,
-  ...domProps }) => domProps;
+import { Field } from 'redux-form';
 
 export const END_POINT = () => {
   let api = '//localhost:8000/api'
@@ -39,29 +21,45 @@ export const END_POINT = () => {
  * @return {react component}             return an html that is generated from react
  */
 export const renderField = function(fieldConfig, field) {
-  const fieldHelper = this.props.fields[field];
-  const { files } = this.state;
-  var i = 0;
+  const { uploadedFiles } = this.state;
+  const { images, uploadImage } = this.props;
+
   if(_.includes(['textarea', 'selectbox'], fieldConfig.tag)) {
-    return ( <div key={field} className="form-group">
-      <fieldConfig.tag className="form-control" {...domOnlyProps(fieldHelper)} />
-       { fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div> }
-      </div>
-    );
-  }
-  if(_.eq(fieldConfig.type, 'file')) {
-    fieldHelper.value = [];
-    return (
-      <Dropzone key={field} multiple={true} onDrop={(file, e) => { 
-        fieldHelper.onChange('file');
-        for(var key in file){
-          files.push(file[key]);  
-        }
+    return ( 
+      <Field key={field} name={field} component={(_field) => {
+        let { meta, input } = _field;
+        return (
+        <div  className="form-group">
+          <fieldConfig.tag {...input} className="form-control"/>
+          {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+        </div>
+        );
       }} />
     );
   }
-  return( <div key={field} className="form-group">
-  <fieldConfig.tag type={fieldConfig.type} className="form-control" {...domOnlyProps(fieldHelper)} />
-   {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
-  </div> );
+  if(_.eq(fieldConfig.type, 'file')) {
+    return (
+      <Field key={field} name={field} component={(_field) => {
+        let { meta, input } = _field;
+        return (<div className="form-group">
+        <Dropzone name={field} multiple={true} onDrop={(file, e) => { 
+          input.onChange('file');
+          uploadImage(file);
+        }} />
+        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+        </div>);
+      }} />
+    );
+  }
+  return(
+    <Field key={field} type={fieldConfig.type} name={field} component={(_field) => {
+      let { meta, input } = _field;
+      return (
+      <div  className="form-group">
+        <fieldConfig.tag {...input} type={meta.type} className="form-control"/>
+        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+      </div>
+      );
+    }} />
+    );
 };
