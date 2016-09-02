@@ -6,11 +6,11 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 const mainReducer = combineReducers({ 
-	Auctions, 
-	Comments,
-	Images,
-	form: formReducer,
-	routing: routerReducer 
+  Auctions, 
+  Comments,
+  Images,
+  form: formReducer,
+  routing: routerReducer 
 });
 
 export default mainReducer;

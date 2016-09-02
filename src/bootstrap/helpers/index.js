@@ -21,8 +21,6 @@ export const END_POINT = () => {
  * @return {react component}             return an html that is generated from react
  */
 export const renderField = function(fieldConfig, field) {
-  //const { uploadedFiles } = this.state;
-  //const { images, uploadImage } = this.props;
 
   if(_.includes(['textarea', 'selectbox'], fieldConfig.tag)) {
     return ( 
@@ -54,14 +52,21 @@ export const renderField = function(fieldConfig, field) {
     );
   }
   return(
-    <Field key={field} type={fieldConfig.type} name={field} component={(_field) => {
-      let { meta, input } = _field;
-      return (
-      <div  className="form-group">
-        <fieldConfig.tag {...input} type={meta.type} className="form-control"/>
-        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
-      </div>
-      );
-    }} />
+    <Field key={field} type={fieldConfig.type} name={field} component={TextField} />
     );
 };
+
+
+export const TextField = function(_field){
+  let { meta, input } = _field;
+  return (
+    <div  className="form-group">
+      <input {...input} type={meta.type} className="form-control"/>
+      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+    </div>
+  );
+}
+
+export const TextArea = (_field) => {
+  
+}

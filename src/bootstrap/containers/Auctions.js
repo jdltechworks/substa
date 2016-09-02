@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 
 const _props = (dispatch) => {
-	return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators(actionCreators, dispatch);
 }
 
 /**
@@ -16,37 +16,37 @@ const _props = (dispatch) => {
  * @return {object} reducer
  */
 @connect((state) => {
-	return {
-		auction: state.Auctions
-	};
+  return {
+    auction: state.Auctions
+  };
 }, _props)
 
 export default class Auctions extends Component {
-	render() {
-		let { auction } = this.props;
-		let { collection } = auction;
-		let display = _.isEmpty(collection) ?
-			<div>Is Loading</div>
-			:
-			collection.map((auction, key) => (
-				<li key={key}>
-					<img src={auction.image} />
-					<h2>{auction.title}</h2>
-					<p>{auction.description}</p>
-				</li>
-		));
-		return(
-			<section className="main">
-				<ul>
-					{display}
-				</ul>
-			</section>
-		);
-	}
-	componentDidMount() {
-		this.props.fetchAuction();
-	}
-	componentWillUnmount() {
-		this.props.isFetchingAuction();
-	}
+  render() {
+    let { auction } = this.props;
+    let { collection } = auction;
+    let display = _.isEmpty(collection) ?
+      <div>Is Loading</div>
+      :
+      collection.map((auction, key) => (
+        <li key={key}>
+          <img src={auction.image} />
+          <h2>{auction.title}</h2>
+          <p>{auction.description}</p>
+        </li>
+    ));
+    return(
+      <section className="main">
+        <ul>
+          {display}
+        </ul>
+      </section>
+    );
+  }
+  componentDidMount() {
+    this.props.fetchAuction();
+  }
+  componentWillUnmount() {
+    this.props.isFetchingAuction();
+  }
 }

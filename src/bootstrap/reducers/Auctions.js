@@ -8,29 +8,29 @@ import _ from 'lodash';
  * @return {object}        current or next state
  */
 const Auctions = (state = {
-	fetching: false,
-	collection: {}
+  fetching: false,
+  collection: {}
 }, action) => {
-	let { payload } = action;
-	let reduced = {
-		IS_FETCHING: {
-			...state,
-			fetching: true,
-			collection: payload
-		},
-		FETCH_COMPLETED: {
-			...state,
-			fetching: false,
-			collection: payload
-		},
-		FETCH_ERROR: {
-			...state,
-			fetching: false,
-			collection: payload
-		}
-	}
-	
-	return _.isUndefined(reduced[action.type]) ? state: reduced[action.type];
+  let { payload } = action;
+  let reduced = {
+    IS_FETCHING: {
+      ...state,
+      fetching: true,
+      collection: payload
+    },
+    FETCH_COMPLETED: {
+      ...state,
+      fetching: false,
+      collection: payload
+    },
+    FETCH_ERROR: {
+      ...state,
+      fetching: false,
+      collection: payload
+    }
+  }
+  
+  return _.isUndefined(reduced[action.type]) ? state: reduced[action.type];
 }
 
 export default Auctions;
