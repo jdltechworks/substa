@@ -66,13 +66,17 @@ module.exports = [
     plugins: debug ? [
         new webpack.DefinePlugin({
           "process.env": {
-             NODE_ENV: JSON.stringify("development")
+             NODE_ENV: JSON.stringify("development"),
+             API: JSON.stringify('//localhost:8000/api'),
+             UPLOAD: JSON.stringify('//localhost:8000/upload')
            }
         })
       ] : [
       new webpack.DefinePlugin({
           "process.env": {
-             NODE_ENV: JSON.stringify("production")
+             NODE_ENV: JSON.stringify("production"),
+             API: JSON.stringify('//subasta-jdltechworks.rhcloud.com/api'),
+             UPLOAD: JSON.stringify('//subasta-jdltechworks.rhcloud/upload')
            }
         }),
       new ExtractTextPlugin('./css/index.min.css'),

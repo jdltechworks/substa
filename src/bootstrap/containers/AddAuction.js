@@ -52,7 +52,6 @@ export default class AddAuction extends Component {
       body,
     })
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then(body => console.log(body))
@@ -71,6 +70,7 @@ export default class AddAuction extends Component {
   render() {
     let { handleSubmit, pristine, submitting, reset } = this.props;
     console.log(this.state.uploadedFiles);
+    console.log(process.env);
     return(
       <form onSubmit={handleSubmit((props) => { this.submitAuction(props) } )}>
         <div className="panel panel-default">
