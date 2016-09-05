@@ -28,7 +28,7 @@ export const renderField = function(fieldConfig, field) {
         let { meta, input } = _field;
         return (
         <div  className="form-group">
-          <fieldConfig.tag {...input} className="form-control"/>
+          <fieldConfig.tag {...input} className="form-control" placeholder={fieldConfig.label} />
           {meta.touched && meta.error ? <div>{meta.error}</div> : null}
         </div>
         );
@@ -52,16 +52,16 @@ export const renderField = function(fieldConfig, field) {
     );
   }
   return(
-    <Field key={field} type={fieldConfig.type} name={field} component={TextField} />
+    <Field key={field} type={fieldConfig.type} name={field} component={TextField} label={fieldConfig.label} />
     );
 };
 
 
 export const TextField = function(_field){
-  let { meta, input } = _field;
+  let { meta, input, label } = _field;
   return (
     <div  className="form-group">
-      <input {...input} type={meta.type} className="form-control"/>
+      <input {...input} type={meta.type} className="form-control" placeholder={label}/>
       {meta.touched && meta.error ? <div>{meta.error}</div> : null}
     </div>
   );

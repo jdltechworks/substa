@@ -24,6 +24,19 @@ const validate = (values) => {
 })
 
 export default class EditProfile extends Component {
+  state = {
+    files: [],
+    uploadedFiles: []
+  };
+  componentDidUpdate() {
+    let { uploadedFiles } = this.state;
+    let { images: { payload } } = this.props;
+    for(var i in payload) {
+      uploadedFiles.push(payload[i]);
+    }
+    
+    //uploadedFiles.push()
+  }  
   render() {
     console.log("userfields = " + USERFIELDS);
     return(

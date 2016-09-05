@@ -1,17 +1,27 @@
 export const USERFIELDS = {
-  title: {
+  profilePic: {
+    tag: 'input',
+    type:'file',
+    label: 'Image upload'
+  },
+  firstName: {
     tag: 'input',
     type: 'text',
-    label: 'Title of the auction'
+    label: 'First Name'
   },
-  startDate: {
-    type: 'text',
+  lastName: {
     tag: 'input',
-    label: 'Start date',
+    type: 'text',
+    label: 'Last Name'
   },
-  description: {
+  phone: {
+    tag: 'input',
+    type: 'text',
+    label: 'Phone Number'
+  },  
+  address: {
     tag: 'textarea',
     type: 'text',
-    label: 'test'
+    label: 'Address'
   }
 };
