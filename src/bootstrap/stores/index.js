@@ -9,11 +9,14 @@ import mainReducer from '../reducers';
 
 const middlewares = [thunk];
 
+let composeEnhancers = null;
 if(_.eq(process.env.NODE_ENV, 'development')) {
-	middlewares.push(createLogger());
-};
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+} else {
+  composeEnhancers = compose;
+}
 
-const store = createStore(mainReducer, applyMiddleware(...middlewares));
+const store = createStore(mainReducer, composeEnhancers(applyMiddleware(...middlewares)));
 
 export const history = syncHistoryWithStore(browserHistory, store);
 

@@ -30,7 +30,7 @@ export default class Auctions extends Component {
       :
       collection.map((auction, key) => (
         <li key={key}>
-          <img className="img-responsive" src={`${process.env.UPLOAD}/${auction.images[0].file}`} />
+          <img className="img-responsive" src={`${auction.images[0].file}`} />
           <h2>{auction.title}</h2>
           <p>{auction.description}</p>
         </li>
