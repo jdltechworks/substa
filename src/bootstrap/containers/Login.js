@@ -29,17 +29,30 @@ export default class Login extends Component {
   render() {
     let { handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit((props) => {this.submitLogin(props)})}>
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h2>Login:</h2>
-          </div>
-          <div className="panel-body">
-          {_.map(LOGIN,renderField.bind(this))}
-          <button className="btn btn-info btn-block">Submit</button>
+      <section className="login clearfix" style={{ paddingTop: '10%' }}>
+        <div className="col-md-4 col-md-offset-4">
+        <div className="row">
+          <div className="col-md-8 col-md-offset-2">
+            <form onSubmit={handleSubmit((props) => {this.submitLogin(props)})}>
+              <div className="panel panel-default">
+                <div className="panel-heading">
+                  <h3>Log in to your account</h3>
+                </div>
+                <div className="panel-body">
+                <br />
+                {_.map(LOGIN,renderField.bind(this))}
+                <button className="btn btn-info">Login</button>
+                </div>
+                <br />
+                <div className="panel-footer text-right">
+                  <h4>New to Subasta? <a href="#">Sign-up</a></h4>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      </form>
+        </div>
+      </section>
       )
   }
 }

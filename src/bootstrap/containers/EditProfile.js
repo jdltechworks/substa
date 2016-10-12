@@ -40,7 +40,7 @@ export default class EditProfile extends Component {
   render() {
     console.log("userfields = " + USERFIELDS);
     return(
-      <form >
+      <form>
         <div className="panel panel-default">
           <div class="panel-heading"><h3>Edit Profile</h3></div>
           <div class="panel-body">

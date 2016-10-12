@@ -72,16 +72,23 @@ export default class AddAuction extends Component {
     console.log(this.state.uploadedFiles);
     console.log(process.env);
     return(
-      <form onSubmit={handleSubmit((props) => { this.submitAuction(props) } )}>
-        <div className="panel panel-default">
-          <div class="panel-heading"><h3>Add Auction</h3></div>
-          <div class="panel-body">
-            {_.map(FIELDS, renderField.bind(this))}
-            <button className="btn btn-info btn-block">SUbmit</button>
-            <button type="button" className="btn btn-info btn-block" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+            <form onSubmit={handleSubmit((props) => { this.submitAuction(props) } )}>
+              
+                <div className="panel panel-default">
+                  <div class="panel-heading"><h3>Add Auction</h3></div>
+                  <div class="panel-body">
+                    {_.map(FIELDS, renderField.bind(this))}
+                    <button className="btn btn-info btn-block">SUbmit</button>
+                    <button type="button" className="btn btn-info btn-block" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+                  </div>
+                </div>
+            </form>          
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 }

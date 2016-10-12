@@ -14,7 +14,7 @@ const Root = () => {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <Route path="/auction" component={Auctions}></Route>
+          <IndexRoute component={Auctions}></IndexRoute>
           <Route path="/auction/add" component={AddAuction}></Route>
           <Route path="/profile/edit" component={EditProfile}></Route>
           <Route path="/login" component={Login}></Route>
